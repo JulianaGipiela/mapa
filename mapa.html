@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>POC MAPAS</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <div style="display: flex;">
+        <div id="map" style="height: 600px;">
+        </div>
+    </div>
+
+ 
+
+    <script>
+        var map = L.map('map').setView([-25.2521, -52.0215], 7); // Ajuste as coordenadas e o nível de zoom conforme necessário
+      
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+      
+        const geoJsonUrl = 'https://drive.google.com/file/d/1tr3gf0j1zMhlEwdLS-7zaYQq47pcI3IJ/view?usp=sharing';
+        // Carregue os dados do GeoJSON do Paraná. Substitua "seu-arquivo.geojson" pelo caminho real do seu arquivo GeoJSON.
+        fetch(geoJsonUrl)
+          .then(response => response.json())
+          .then(data => {
+            L.geoJSON(data, {
+              style: function(feature) {
+                // Adicione lógica aqui para definir a cor com base nos parâmetros desejados
+                return { fillColor: '#ff0000', weight: 2, opacity: 1, color: 'white', fillOpacity: 0.7 };
+              }
+            }).addTo(map);
+          });
+      </script>
+      
+</body>
+
+
+</html>
